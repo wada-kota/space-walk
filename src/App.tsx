@@ -1,7 +1,9 @@
+import { SpaceBackground } from "./components/Spacebackground";
+
 function App() {
   return (
     <div>
-      <p>space-walk</p>
+      <SpaceBackground />
     </div>
   );
 }
