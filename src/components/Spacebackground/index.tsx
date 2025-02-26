@@ -2,6 +2,8 @@ import { useRef, useEffect } from "react";
 
 import * as THREE from "three";
 
+import * as styles from "./index.styles";
+
 export const SpaceBackground = () => {
   const mountRef = useRef<HTMLDivElement>(null);
 
@@ -32,10 +34,25 @@ export const SpaceBackground = () => {
     };
     animate();
 
+    // ウィンドウ変更時にサイズを維持する処理
+    const onWindowResize = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+
+      // カメラのアスペクト比を更新
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+
+      // レンダラーのサイズを更新
+      renderer.setSize(width, height);
+    };
+
+    window.addEventListener("resize", onWindowResize);
+
     return () => {
       mountRef.current?.removeChild(renderer.domElement);
     };
   }, []);
 
-  return <div ref={mountRef} />;
+  return <div ref={mountRef} css={styles.base} />;
 };
